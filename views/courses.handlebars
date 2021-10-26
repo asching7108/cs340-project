@@ -1,0 +1,65 @@
+<!-- NAV BAR -->
+{{> navbar_partial}}
+<!-- NAV BAR -->
+
+<h1>Courses</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Year</th>
+      <th scope="col">Term</th>
+      <th scope="col">Instructor ID</th>
+      <th scope="col">Textbook ID</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each courses}}
+      <tr>
+        <td scope="row">{{course_id}}</td>
+        <td>{{name}}</td>
+        <td>{{year}}</td>
+        <td>{{term}}</td>
+        <td>{{instructor_id}}</td>
+        <td>{{textbook_id}}</td>
+        <td><a href="#">Edit</a></td>
+        <td><a href="#">Delete</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<h2>Add Course</h2>
+
+<form>
+  <div class="form-group">
+    <label for="name">Course name</label>
+    <input type="text" class="form-control" id="name" required />
+  </div>
+  <div class="form-group">
+    <label for="year">Course year</label>
+    <input type="number" class="form-control" id="year" required />
+  </div>
+  <div class="form-group">
+    <label for="term">Course term</label>
+		<select class="form-control" id="term" required>
+			<option value="spring">Spring</option>
+			<option value="summer">Summer</option>
+			<option value="fall">Fall</option>
+			<option value="winter">Winter</option>
+		</select>
+  </div>
+  <div class="form-group">
+    <label for="instructor_id">Instructor ID</label>
+    <input type="number" class="form-control" id="instructor_id" required />
+  </div>
+  <div class="form-group">
+    <label for="textbook_id">Textbook ID</label>
+    <input type="number" class="form-control" id="textbook_id" />
+  </div>
+  <button type="submit" class="btn btn-primary">Add Course</button>
+</form>

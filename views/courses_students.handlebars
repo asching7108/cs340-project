@@ -1,0 +1,40 @@
+<!-- NAV BAR -->
+{{> navbar_partial}}
+<!-- NAV BAR -->
+
+<h1>Courses_Students</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Course ID</th>
+      <th scope="col">Student ID</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each courses_students}}
+      <tr>
+        <td scope="row">{{course_id}}</td>
+        <td>{{student_id}}</td>
+        <td><a href="#">Edit</a></td>
+        <td><a href="#">Delete</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<h2>Add Course-Student Relationship</h2>
+
+<form>
+  <div class="form-group">
+    <label for="course_id">Course ID</label>
+    <input type="number" class="form-control" id="course_id" required />
+  </div>
+  <div class="form-group">
+    <label for="student_id">Student ID</label>
+    <input type="number" class="form-control" id="student_id" required />
+  </div>
+  <button type="submit" class="btn btn-primary">Add Relationship</button>
+</form>

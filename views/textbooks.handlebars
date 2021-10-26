@@ -1,0 +1,48 @@
+<!-- NAV BAR -->
+{{> navbar_partial}}
+<!-- NAV BAR -->
+
+<h1>Textbooks</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">ISBN</th>
+      <th scope="col">Title</th>
+      <th scope="col">Author</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each textbooks}}
+      <tr>
+        <td scope="row">{{textbook_id}}</td>
+        <td>{{textbook_isbn}}</td>
+        <td>{{name}}</td>
+        <td>{{author}}</td>
+        <td><a href="#">Edit</a></td>
+        <td><a href="#">Delete</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<h2>Add Textbook</h2>
+
+<form>
+  <div class="form-group">
+    <label for="first_name">ISBN</label>
+    <input type="text" class="form-control" id="first_name" />
+  </div>
+  <div class="form-group">
+    <label for="name">Title</label>
+    <input type="text" class="form-control" id="name" required />
+  </div>
+  <div class="form-group">
+    <label for="author">Author</label>
+    <input type="text" class="form-control" id="author" required />
+  </div>
+  <button type="submit" class="btn btn-primary">Add Textbook</button>
+</form>
