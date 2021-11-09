@@ -42,23 +42,22 @@ DELETE FROM `Course_Student` WHERE `course_id` = :courseId AND `student_id` = :s
 
 /******** Textbook ********/
 
--- get all textbook information for the list view
+-- get all textbook data
 SELECT * FROM `Textbook`;
 
--- insert a textbook into the textbook table
+-- add a new textbook
 INSERT INTO `Textbook` (`textbook_isbn`, `name`, `author`)
 VALUES (:isbnInput, :nameInput, :authorInput);
 
--- delete a textbook from the textbook table
-DELETE FROM `Textbook`
-WHERE `textbook_id` = :textBookIdDeleteFromView;
+-- update a textbook's data
+UPDATE `Textbook` SET
+	`textbook_isbn` = :isbnInput, 
+    	`name` = :nameInput, 
+    	`author` = :authorInput
+WHERE `textbook_id` = :textbookIdInput;
 
--- edit a textbook from the textbook table
-UPDATE `Textbook`
-SET `textbook_isbn` = :isbnInput, 
-    `name` = :nameInput, 
-    `author` = :authorInput
-WHERE `textbook_id` = :textbook_id;
+-- delete a textbook
+DELETE FROM `Textbook` WHERE `textbook_id` = :textbookIdInput;
 
 -- filter textbooks by name
 SELECT * FROM `Textbook` WHERE `name` LIKE CONCAT('%', :nameInput, '%');
@@ -78,17 +77,17 @@ SELECT * FROM `Instructor`;
 INSERT INTO `Instructor` (`first_name`, `last_name`, `email`)
 VALUES (:firstNameInput, :lastNameInput, :emailInput);
 
--- delete an instructor from the instructor table
-DELETE FROM `Instructor` WHERE instructor_id = :instructorIdDeleteFromView;
-
--- edit an instructor from the instructor table
-UPDATE `Instructor`
-SET `first_name` = :firstNameInput, 
-    `last_name` = :lastNameInput, 
-    `email` = instructorEmail
+-- update an instructor's data
+UPDATE `Instructor` SET
+	`first_name` = :firstNameInput, 
+    	`last_name` = :lastNameInput, 
+    	`email` = instructorEmail
 WHERE `instructor_id` = :instructorId;
 
--- filter instructors by name
+-- delete an instructor
+DELETE FROM `Instructor` WHERE `instructor_id` = :instructorIdInput;
+
+-- filter instructors by input name
 SELECT * FROM `Instructor` WHERE CONCAT(`first_name`, ' ', `last_name`) like CONCAT('%', :nameInput, '%');
 
 /******** Course ********/
@@ -96,18 +95,23 @@ SELECT * FROM `Instructor` WHERE CONCAT(`first_name`, ' ', `last_name`) like CON
 -- get all course information
 SELECT * FROM `Course`;
 
--- insert a new course into the course table
+-- add a new course
 INSERT INTO `Course` (`name`, `year`, `term`, `instructor_id`, `textbook_id`)
 VALUES (:nameInput, :yearInput, :termInput, :instructorIdInput, :textbookIdInput);
 
--- delete a course from the course table
-DELETE FROM `Course` WHERE course_id = :courseIdDeleteFromView;
+-- delete a course
+DELETE FROM `Course` WHERE `course_id` = :courseIdDeleteFromView;
 
--- edit a course from the course table
-UPDATE `Course`
-SET `name` = :nameInput, 
-    `year` = :yearInput, 
-    `term` = :termInput, 
-    `instructor_id` = :instructorIdInput, 
-    `textbook_id` = :textbookIdInput;
+-- update a course's data
+UPDATE `Course` SET 
+	`name` = :nameInput, 
+    	`year` = :yearInput, 
+    	`term` = :termInput, 
+    	`instructor_id` = :instructorIdInput, 
+    	`textbook_id` = :textbookIdInput;
 WHERE `course_id` = :courseId;
+
+-- filter courses by name
+SELECT * FROM `Course` WHERE name like CONCAT('%', :courseInput, '%');
+
+-- do we also want a filter that combines a search? like filter by year and term?
