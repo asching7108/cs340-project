@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "dev-forever": "./node_modules/forever/bin/forever index.js"
+    "dev-forever": "./node_modules/forever/bin/forever start index.js"
   },
   "engines": {
     "node": "15.9.0"
