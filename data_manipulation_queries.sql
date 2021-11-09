@@ -51,7 +51,7 @@ VALUES (:isbnInput, :nameInput, :authorInput);
 
 -- delete a textbook from the textbook table
 DELETE FROM `Textbook`
-WHERE textbook_id = :textBookIdDeleteFromView;
+WHERE `textbook_id` = :textBookIdDeleteFromView;
 
 -- edit a textbook from the textbook table
 UPDATE `Textbook`
@@ -59,6 +59,15 @@ SET `textbook_isbn` = :isbnInput,
     `name` = :nameInput, 
     `author` = :authorInput
 WHERE `textbook_id` = :textbook_id;
+
+-- filter textbooks by name
+SELECT * FROM `Textbook` WHERE `name` LIKE CONCAT('%', :nameInput, '%');
+
+-- filter textbooks by ISBN
+SELECT * FROM `Textbook` WHERE `textbook_isbn` LIKE CONCAT('%', :isbnInput, '%');
+
+-- filter textbooks by author
+SELECT * FROM `Textbook` WHERE `author` LIKE CONCAT('%', :authorInput, '%');
 
 /******** Instructor ********/
 
