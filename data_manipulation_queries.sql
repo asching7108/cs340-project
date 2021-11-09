@@ -88,6 +88,9 @@ SET `first_name` = :firstNameInput,
     `email` = instructorEmail
 WHERE `instructor_id` = :instructorId;
 
+-- filter instructors by name
+SELECT * FROM `Instructor` WHERE CONCAT(`first_name`, ' ', `last_name`) like CONCAT('%', :nameInput, '%');
+
 /******** Course ********/
 
 -- get all course information
