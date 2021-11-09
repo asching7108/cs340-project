@@ -39,3 +39,62 @@ INSERT INTO `Course_Student` (`course_id`, `student_id`) VALUES (:courseId, :stu
 
 -- delete a course student relationship
 DELETE FROM `Course_Student` WHERE `course_id` = :courseId AND `student_id` = :studentId;
+
+/******** Textbook ********/
+
+-- get all textbook information for the list view
+SELECT * FROM `Textbook`;
+
+-- insert a textbook into the textbook table
+INSERT INTO `Textbook` (`textbook_isbn`, `name`, `author`)
+VALUES (:isbnInput, :nameInput, :authorInput);
+
+-- delete a textbook from the textbook table
+DELETE FROM `Textbook`
+WHERE textbook_id = :textBookIdDeleteFromView;
+
+-- edit a textbook from the textbook table
+UPDATE `Textbook`
+SET `textbook_isbn` = :isbnInput, 
+    `name` = :nameInput, 
+    `author` = :authorInput
+WHERE `textbook_id` = :textbook_id;
+
+/******** Instructor ********/
+
+-- get all instructor information
+SELECT * FROM `Instructor`;
+
+-- add a new instructor
+INSERT INTO `Instructor` (`first_name`, `last_name`, `email`)
+VALUES (:firstNameInput, :lastNameInput, :emailInput);
+
+-- delete an instructor from the instructor table
+DELETE FROM `Instructor` WHERE instructor_id = :instructorIdDeleteFromView;
+
+-- edit an instructor from the instructor table
+UPDATE `Instructor`
+SET `first_name` = :firstNameInput, 
+    `last_name` = :lastNameInput, 
+    `email` = instructorEmail
+WHERE `instructor_id` = :instructorId;
+
+/******** Course ********/
+
+-- get all course information
+SELECT * FROM `Course`;
+
+-- insert a new course into the course table
+INSERT INTO `Course` (`name`, `year`, `term`, `instructor_id`, `textbook_id`)
+VALUES (:nameInput, :yearInput, :termInput, :instructorIdInput, :textbookIdInput);
+
+-- delete a course from the course table
+DELETE FROM `Course` WHERE course_id = :courseIdDeleteFromView;
+
+-- edit a course from the course table
+UPDATE `Course`
+SET `name` = :nameInput, 
+    `year` = :yearInput, 
+    `term` = :termInput, 
+    `instructor_id` = :instructorIdInput, 
+    `textbook_id` = :textbookIdInput;
