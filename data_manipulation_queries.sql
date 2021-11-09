@@ -98,3 +98,4 @@ SET `name` = :nameInput,
     `term` = :termInput, 
     `instructor_id` = :instructorIdInput, 
     `textbook_id` = :textbookIdInput;
+WHERE `course_id` = :courseId;
