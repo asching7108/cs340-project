@@ -88,12 +88,18 @@ WHERE `instructor_id` = :instructorId;
 DELETE FROM `Instructor` WHERE `instructor_id` = :instructorIdInput;
 
 -- filter instructors by input name
-SELECT * FROM `Instructor` WHERE CONCAT(`first_name`, ' ', `last_name`) like CONCAT('%', :nameInput, '%');
+SELECT * FROM `Instructor` WHERE CONCAT(`first_name`, ' ', `last_name`) LIKE CONCAT('%', :nameInput, '%');
 
 /******** Course ********/
 
--- get all course information
+-- get all course information (old method: selects nondescriptive IDs)
 SELECT * FROM `Course`;
+
+-- get all course information (new method: selects Instructor.last_name and Textbook.name)
+SELECT c.course_id, c.name, c.year, c.term, i.last_name as 'Instructor', t.name as 'Textbook Title' 
+FROM Course c 
+INNER JOIN Instructor i ON c.instructor_id = i.instructor_id 
+INNER JOIN Textbook t ON c.textbook_id = t.textbook_id;
 
 -- add a new course
 INSERT INTO `Course` (`name`, `year`, `term`, `instructor_id`, `textbook_id`)
@@ -112,6 +118,7 @@ UPDATE `Course` SET
 WHERE `course_id` = :courseId;
 
 -- filter courses by name
-SELECT * FROM `Course` WHERE name like CONCAT('%', :courseInput, '%');
+SELECT * FROM `Course` WHERE name LIKE CONCAT('%', :courseInput, '%');
 
--- do we also want a filter that combines a search? like filter by year and term?
+-- filter a course by term and year
+SELECT * FROM `Course` WHERE CONCAT (`year, ' ', `term`) LIKE CONCAT ('%', :yearInput, ' ', :termInput, '%')
