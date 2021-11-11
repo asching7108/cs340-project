@@ -92,10 +92,7 @@ SELECT * FROM `Instructor` WHERE CONCAT(`first_name`, ' ', `last_name`) LIKE CON
 
 /******** Course ********/
 
--- get all course information (old method: selects nondescriptive IDs)
-SELECT * FROM `Course`;
-
--- get all course information (new method: selects Instructor.last_name and Textbook.name)
+-- get all course data
 SELECT c.course_id, c.name, c.year, c.term, i.last_name as 'Instructor', t.name as 'Textbook Title' 
 FROM Course c 
 INNER JOIN Instructor i ON c.instructor_id = i.instructor_id 
@@ -118,7 +115,22 @@ UPDATE `Course` SET
 WHERE `course_id` = :courseId;
 
 -- filter courses by name
-SELECT * FROM `Course` WHERE name LIKE CONCAT('%', :courseInput, '%');
+SELECT c.course_id, c.name, c.year, c.term, i.last_name as 'Instructor', t.name as 'Textbook Title' 
+FROM Course c 
+INNER JOIN Instructor i ON c.instructor_id = i.instructor_id 
+INNER JOIN Textbook t ON c.textbook_id = t.textbook_id
+WHERE c.name LIKE CONCAT('%', 'Intro', '%');
 
 -- filter a course by term and year
-SELECT * FROM `Course` WHERE CONCAT (`year, ' ', `term`) LIKE CONCAT ('%', :yearInput, ' ', :termInput, '%')
+SELECT c.course_id, c.name, c.year, c.term, i.last_name as 'Instructor', t.name as 'Textbook Title' 
+FROM Course c 
+INNER JOIN Instructor i ON c.instructor_id = i.instructor_id 
+INNER JOIN Textbook t ON c.textbook_id = t.textbook_id
+WHERE CONCAT (`year`, ' ', `term`) LIKE CONCAT ('%', :yearInput, ' ', :termInput, '%');
+
+-- filter a course by instructor last name
+SELECT c.course_id, c.name, c.year, c.term, i.last_name as 'Instructor', t.name as 'Textbook Title' 
+FROM Course c 
+INNER JOIN Instructor i ON c.instructor_id = i.instructor_id 
+INNER JOIN Textbook t ON c.textbook_id = t.textbook_id
+WHERE i.last_name LIKE CONCAT ('%', :instructorNameInput, '%');
