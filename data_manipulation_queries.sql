@@ -93,10 +93,10 @@ SELECT * FROM `Instructor` WHERE CONCAT(`first_name`, ' ', `last_name`) LIKE CON
 /******** Course ********/
 
 -- get all course data
-SELECT c.course_id, c.name, c.year, c.term, i.last_name as 'Instructor', t.name as 'Textbook Title' 
+SELECT c.course_id, c.name, c.year, c.term, CONCAT(i.first_name, ' ', i.last_name) as 'Instructor', t.name as 'Textbook Title' 
 FROM Course c 
 INNER JOIN Instructor i ON c.instructor_id = i.instructor_id 
-INNER JOIN Textbook t ON c.textbook_id = t.textbook_id;
+LEFT JOIN Textbook t ON c.textbook_id = t.textbook_id;
 
 -- add a new course
 INSERT INTO `Course` (`name`, `year`, `term`, `instructor_id`, `textbook_id`)
@@ -115,22 +115,22 @@ UPDATE `Course` SET
 WHERE `course_id` = :courseId;
 
 -- filter courses by name
-SELECT c.course_id, c.name, c.year, c.term, i.last_name as 'Instructor', t.name as 'Textbook Title' 
+SELECT c.course_id, c.name, c.year, c.term, CONCAT(i.first_name, ' ', i.last_name) as 'Instructor', t.name as 'Textbook Title' 
 FROM Course c 
 INNER JOIN Instructor i ON c.instructor_id = i.instructor_id 
-INNER JOIN Textbook t ON c.textbook_id = t.textbook_id
-WHERE c.name LIKE CONCAT('%', 'Intro', '%');
+LEFT JOIN Textbook t ON c.textbook_id = t.textbook_id
+WHERE c.name LIKE CONCAT('%', :nameInput, '%');
 
 -- filter a course by term and year
-SELECT c.course_id, c.name, c.year, c.term, i.last_name as 'Instructor', t.name as 'Textbook Title' 
+SELECT c.course_id, c.name, c.year, c.term, CONCAT(i.first_name, ' ', i.last_name) as 'Instructor', t.name as 'Textbook Title' 
 FROM Course c 
 INNER JOIN Instructor i ON c.instructor_id = i.instructor_id 
-INNER JOIN Textbook t ON c.textbook_id = t.textbook_id
-WHERE CONCAT (`year`, ' ', `term`) LIKE CONCAT ('%', :yearInput, ' ', :termInput, '%');
+LEFT JOIN Textbook t ON c.textbook_id = t.textbook_id
+WHERE (`year` = :yearInput OR :yearInput IS NULL) OR (`term` = :termInput OR :termInput IS NULL);
 
--- filter a course by instructor last name
-SELECT c.course_id, c.name, c.year, c.term, i.last_name as 'Instructor', t.name as 'Textbook Title' 
+-- filter a course by instructor name
+SELECT c.course_id, c.name, c.year, c.term, CONCAT(i.first_name, ' ', i.last_name) as 'Instructor', t.name as 'Textbook Title' 
 FROM Course c 
 INNER JOIN Instructor i ON c.instructor_id = i.instructor_id 
-INNER JOIN Textbook t ON c.textbook_id = t.textbook_id
-WHERE i.last_name LIKE CONCAT ('%', :instructorNameInput, '%');
+LEFT JOIN Textbook t ON c.textbook_id = t.textbook_id
+WHERE CONCAT(i.first_name, ' ', i.last_name) LIKE CONCAT ('%', :instructorNameInput, '%');
