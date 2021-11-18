@@ -70,8 +70,8 @@ SELECT * FROM `Textbook` WHERE `author` LIKE CONCAT('%', :authorInput, '%');
 
 /******** Instructor ********/
 
--- get all instructor information
-SELECT * FROM `Instructor`;
+-- get instructors by input name (return all instructor information if input name is NULL)
+SELECT * FROM `Instructor` WHERE :nameInput IS NULL OR CONCAT(`first_name`, ' ', `last_name`) LIKE CONCAT('%', :nameInput, '%');
 
 -- add a new instructor
 INSERT INTO `Instructor` (`first_name`, `last_name`, `email`)
@@ -86,9 +86,6 @@ WHERE `instructor_id` = :instructorId;
 
 -- delete an instructor
 DELETE FROM `Instructor` WHERE `instructor_id` = :instructorIdInput;
-
--- filter instructors by input name
-SELECT * FROM `Instructor` WHERE CONCAT(`first_name`, ' ', `last_name`) LIKE CONCAT('%', :nameInput, '%');
 
 /******** Course ********/
 
