@@ -26,12 +26,14 @@ router
     //     last_name: "Gates",
     //     email: "billgates@123.com"
     //   },
-    // ]
+    // ];
 
-    const { nameInput } = req.query;
+    const { name } = req.query;
     const sql = `SELECT * FROM Instructor
-                ${(nameInput) ? `WHERE CONCAT(first_name, ' ', last_name) LIKE CONCAT('%', ?, '%')` : ''}`;
-    const values = [nameInput];
+                ${name ? `WHERE CONCAT(first_name, ' ', last_name) LIKE CONCAT('%', ?, '%')` : ''}
+                ORDER BY first_name, last_name`;
+    const values = [];
+    if (name) values.push(name);
 
     mysql.pool.query(sql, values, function(error, result) {
       if (error) {
@@ -39,6 +41,7 @@ router
         res.end();
       }
       else {
+        context.name = name;
         context.instructors = result;
         res.render('instructors', context);
       }

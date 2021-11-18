@@ -70,64 +70,68 @@ SELECT * FROM `Textbook` WHERE `author` LIKE CONCAT('%', :authorInput, '%');
 
 /******** Instructor ********/
 
--- get instructors by input name (return all instructor information if input name is NULL)
-SELECT * FROM `Instructor` WHERE :nameInput IS NULL OR CONCAT(`first_name`, ' ', `last_name`) LIKE CONCAT('%', :nameInput, '%');
+-- get all instructors
+SELECT * FROM `Instructor` ORDER BY first_name, last_name;
 
 -- add a new instructor
 INSERT INTO `Instructor` (`first_name`, `last_name`, `email`)
-VALUES (:firstNameInput, :lastNameInput, :emailInput);
+VALUES (:first_name, :last_name, :email);
 
 -- update an instructor's data
 UPDATE `Instructor` SET
-	`first_name` = :firstNameInput, 
-    	`last_name` = :lastNameInput, 
-    	`email` = instructorEmail
-WHERE `instructor_id` = :instructorId;
+	`first_name` = :first_name, 
+    	`last_name` = :last_name, 
+    	`email` = email
+WHERE `instructor_id` = :instructor_id;
 
 -- delete an instructor
-DELETE FROM `Instructor` WHERE `instructor_id` = :instructorIdInput;
+DELETE FROM `Instructor` WHERE `instructor_id` = :instructor_id;
+
+-- filter instructors by input name
+SELECT * FROM `Instructor` WHERE CONCAT(`first_name`, ' ', `last_name`) LIKE CONCAT('%', :name, '%');
 
 /******** Course ********/
 
 -- get all course data
-SELECT c.course_id, c.name, c.year, c.term, CONCAT(i.first_name, ' ', i.last_name) as 'Instructor', t.name as 'Textbook Title' 
+SELECT c.course_id, c.name, c.year, c.term, i.instructor_id, CONCAT(i.first_name, ' ', i.last_name) as 'instructor_name', t.textbook_id, t.name as 'textbook_title' 
 FROM Course c 
 INNER JOIN Instructor i ON c.instructor_id = i.instructor_id 
-LEFT JOIN Textbook t ON c.textbook_id = t.textbook_id;
+LEFT JOIN Textbook t ON c.textbook_id = t.textbook_id
+ORDER BY c.year DESC, c.term, c.name;
 
 -- add a new course
 INSERT INTO `Course` (`name`, `year`, `term`, `instructor_id`, `textbook_id`)
-VALUES (:nameInput, :yearInput, :termInput, :instructorIdInput, :textbookIdInput);
+VALUES (:name, :year, :term, :instructor_id, :textbook_id);
 
 -- delete a course
-DELETE FROM `Course` WHERE `course_id` = :courseIdDeleteFromView;
+DELETE FROM `Course` WHERE `course_id` = :course_id;
 
 -- update a course's data
 UPDATE `Course` SET 
-	`name` = :nameInput, 
-    	`year` = :yearInput, 
-    	`term` = :termInput, 
-    	`instructor_id` = :instructorIdInput, 
-    	`textbook_id` = :textbookIdInput;
-WHERE `course_id` = :courseId;
+	`name` = :name, 
+    	`year` = :year, 
+    	`term` = :term, 
+    	`instructor_id` = :instructor_id, 
+    	`textbook_id` = :textbook_id;
+WHERE `course_id` = :course_id;
 
 -- filter courses by name
 SELECT c.course_id, c.name, c.year, c.term, CONCAT(i.first_name, ' ', i.last_name) as 'Instructor', t.name as 'Textbook Title' 
 FROM Course c 
 INNER JOIN Instructor i ON c.instructor_id = i.instructor_id 
 LEFT JOIN Textbook t ON c.textbook_id = t.textbook_id
-WHERE c.name LIKE CONCAT('%', :nameInput, '%');
+WHERE c.name LIKE CONCAT('%', :name, '%');
 
--- filter a course by term and year
+-- filter courses by term and year
 SELECT c.course_id, c.name, c.year, c.term, CONCAT(i.first_name, ' ', i.last_name) as 'Instructor', t.name as 'Textbook Title' 
 FROM Course c 
 INNER JOIN Instructor i ON c.instructor_id = i.instructor_id 
 LEFT JOIN Textbook t ON c.textbook_id = t.textbook_id
-WHERE (`year` = :yearInput OR :yearInput IS NULL) OR (`term` = :termInput OR :termInput IS NULL);
+WHERE (`year` = :year OR :year IS NULL) OR (`term` = :term OR :term IS NULL);
 
--- filter a course by instructor name
+-- filter courses by instructor name
 SELECT c.course_id, c.name, c.year, c.term, CONCAT(i.first_name, ' ', i.last_name) as 'Instructor', t.name as 'Textbook Title' 
 FROM Course c 
 INNER JOIN Instructor i ON c.instructor_id = i.instructor_id 
 LEFT JOIN Textbook t ON c.textbook_id = t.textbook_id
-WHERE CONCAT(i.first_name, ' ', i.last_name) LIKE CONCAT ('%', :instructorNameInput, '%');
+WHERE CONCAT(i.first_name, ' ', i.last_name) LIKE CONCAT ('%', :instructor_name, '%');
