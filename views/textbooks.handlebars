@@ -4,6 +4,15 @@
 
 <h1>Textbooks</h1>
 
+<div class="row justify-content-center mb-3">
+  <form class="form-inline" method="get">
+    <label for="filter_type" class="m-1">Search By: </label>
+    <select class="form-control m-1" name="filter_type" required onchange="window.location.href='/textbooks?filter_type=' + this.value">
+            <option value="by_name" {{#ifCond filter_type "==" "by_name"}}selected{{/ifCond}}>Name</option>
+            <option value="by_ISBN" {{#ifCond filter_type "==" "by_ISBN"}}selected{{/ifCond}}>ISBN</option>
+            <option value="by_author" {{#ifCond filter_type "==" "by_author}}selected{{/ifCond}}Author</option>
+      </select>
+
 <table class="table">
   <thead>
     <tr>
