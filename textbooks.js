@@ -29,13 +29,14 @@ router
    // ]
   
     const { filter_type, isbn, name, author } = req.query
-    const sql = `SELECT textbook_isbn, name, author
-                FROM Textbook
+    const sql = `SELECT textbook_id, textbook_isbn, name, author
+                FROM Textbook 
                 WHERE 1
                 ${isbn ? `AND textbook_isbn LIKE CONCAT('%', ?, '%')` : ''}
                 ${name ? `AND name LIKE CONCAT('%', ?, '%')` : ''}
                 ${author ? `AND author LIKE CONCAT('%', ?, '%')` : ''}
                 ORDER BY name DESC`;
+
     const values = [];
     if (isbn) values.push(isbn);
     if (name) values.push(name);
@@ -47,7 +48,7 @@ router
         res.end();
       }
       else {
-        context.filter_type = filter_type ? filter_type: "by_isbn";
+        context.filter_type = filter_type ? filter_type: "by_name";
         context.isbn = isbn;
         context.name = name;
         context.author = author;
@@ -55,22 +56,22 @@ router
         res.render('textbooks', context);
       }
     });
-});
+  });
 
 router
   .post('/', urlencodedParser, function(req, res) {
-    const {textbook_isbn, name, author } = req.body;
+    const { textbook_isbn, name, author } = req.body;
     const sql = 'INSERT INTO Textbook (textbook_isbn, name, author) VALUES (?, ?, ?)';
-    const values = [first_name, last_name, email];
+    const values = [textbook_isbn, name, author];
   
     mysql.pool.query(sql, values, function(error, result) {
       if (error) {
         res.write(JSON.stringify(error));
         res.end();
       } else {
-        res.redirect('/instructors');
+        res.redirect('/textbooks');
       }
     });
-});
+  });
         
 module.exports = router;
