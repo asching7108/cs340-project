@@ -21,10 +21,8 @@ DELETE FROM `Student` WHERE `id` = :studentId;
 -- get all students by name and/or type
 SELECT *
 FROM Student
-WHERE 1
-${name ? `AND CONCAT(first_name, ' ', last_name) LIKE CONCAT('%', ?, '%')` : ''}
-${type ? `AND type = ?` : ''}
-ORDER BY first_name, last_name`;
+WHERE (first_name, ' ', last_name) LIKE CONCAT(:firstNameInput, ' ', :lastNameInput) AND type = :typeInput
+ORDER BY first_name, last_name;
 
 /******** Course_Student ********/
 
