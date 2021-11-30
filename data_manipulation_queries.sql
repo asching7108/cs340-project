@@ -18,11 +18,13 @@ WHERE `id`= :studentId;
 -- delete a student
 DELETE FROM `Student` WHERE `id` = :studentId;
 
--- get all students under the input program type
-SELECT * FROM `Student` WHERE `type` = :typeInput;
-
--- get all students associated with the input name
-SELECT * FROM `Student` WHERE CONCAT(`first_name`, ' ', `last_name`) like CONCAT('%', :nameInput, '%');
+-- get all students by name and/or type
+SELECT *
+FROM Student
+WHERE 1
+${name ? `AND CONCAT(first_name, ' ', last_name) LIKE CONCAT('%', ?, '%')` : ''}
+${type ? `AND type = ?` : ''}
+ORDER BY first_name, last_name`;
 
 /******** Course_Student ********/
 
