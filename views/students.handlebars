@@ -5,18 +5,18 @@
 <h1>Students</h1>
 
 <div class="row justify-content-center mb-3">
-    <form class="form-inline" method="get">
-        <label for="name" class="m-1">Student Name: </label>
-        <input type="text" class="form-control m-1" name="name" value="{{name}}" />
-        <label for="type" class="m-1">Student Type: </label>
-        <select class="form-control m-1" name="type">
-            <option></option>
-            <option value="Undergraduate" {{#ifCond term "==" "undergraduate"}} selected{{/ifCond}}>Undergraduate</option>
-            <option value="Graduate" {{#ifCond term "==" "graduate"}} selected{{/ifCond}}>Graduate</option>
-            <option value="Post-Bacc" {{#ifCond term "==" "post-bacc"}} selected{{/ifCond}}>Post-Bacc</option>
-        </select>
-        <button type="submit" class="btn btn-primary m-1">Search</button>
-    </form>
+  <form class="form-inline" method="get">
+    <label for="name" class="m-1">Student Name: </label>
+    <input type="text" class="form-control m-1" name="name" value="{{name}}" />
+    <label for="type" class="m-1">Program Type: </label>
+    <select class="form-control m-1" name="type">
+      <option></option>
+      <option value="Undergraduate" {{#ifCond type "==" "Undergraduate"}} selected{{/ifCond}}>Undergraduate</option>
+      <option value="Graduate" {{#ifCond type "==" "Graduate"}} selected{{/ifCond}}>Graduate</option>
+      <option value="Post-Bacc" {{#ifCond type "==" "Post-Bacc"}} selected{{/ifCond}}>Post-Bacc</option>
+    </select>
+    <button type="submit" class="btn btn-primary m-1">Search</button>
+  </form>
 </div>
 
 <table class="table">
@@ -37,8 +37,14 @@
         <td>{{last_name}}</td>
         <td>{{email}}</td>
         <td>{{type}}</td>
-        <td><a href="#">Edit</a></td>
-        <td><a href="#">Delete</a></td>
+        <td>
+          <a class="btn btn-primary" href="/students/{{student_id}}">Edit</a>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger" onclick="deleteItem('students', {{student_id}})">
+            Delete
+          </button>
+        </td>
       </tr>
     {{/each}}
   </tbody>
@@ -64,7 +70,7 @@
     <select class="form-control" name="type" required>
 			<option value="Undergraduate">Undergraduate</option>
 			<option value="Graduate">Graduate</option>
-			<option value="Post-bacc">Post-Bacc</option>
+			<option value="Post-Bacc">Post-Bacc</option>
 		</select>
   </div>
   <button type="submit" class="btn btn-primary">Add Student</button>

@@ -28,8 +28,14 @@
         <td scope="row">{{first_name}}</td>
         <td>{{last_name}}</td>
         <td>{{email}}</td>
-        <td><a href="#">Edit</a></td>
-        <td><a href="#">Delete</a></td>
+        <td>
+          <a class="btn btn-primary" href="/instructors/{{instructor_id}}">Edit</a>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger" onclick="deleteItem('instructors', {{instructor_id}})">
+            Delete
+          </button>
+        </td>
       </tr>
     {{/each}}
   </tbody>

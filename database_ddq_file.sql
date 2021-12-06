@@ -38,7 +38,7 @@ CREATE TABLE `Course` (
   CONSTRAINT `course_textbook_fk`
     FOREIGN KEY (`textbook_id`)
     REFERENCES `Textbook` (`textbook_id`)
-    ON UPDATE CASCADE
+    ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- create Student table

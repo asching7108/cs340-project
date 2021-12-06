@@ -22,10 +22,10 @@
       <label for="term" class="m-1">Term: </label>
       <select class="form-control m-1" name="term">
         <option></option>
-        <option value="Spring" {{#ifCond term "==" "spring"}}selected{{/ifCond}}>Spring</option>
-        <option value="Summer" {{#ifCond term "==" "summer"}}selected{{/ifCond}}>Summer</option>
-        <option value="Fall" {{#ifCond term "==" "fall"}}selected{{/ifCond}}>Fall</option>
-        <option value="Winter" {{#ifCond term "==" "winter"}}selected{{/ifCond}}>Winter</option>
+        <option value="Spring" {{#ifCond term "==" "Spring"}}selected{{/ifCond}}>Spring</option>
+        <option value="Summer" {{#ifCond term "==" "Summer"}}selected{{/ifCond}}>Summer</option>
+        <option value="Fall" {{#ifCond term "==" "Fall"}}selected{{/ifCond}}>Fall</option>
+        <option value="Winter" {{#ifCond term "==" "Winter"}}selected{{/ifCond}}>Winter</option>
       </select>
     {{/ifCond}}
     {{#ifCond filter_type "==" "by_instructor_name"}}
@@ -56,8 +56,14 @@
         <td>{{term}}</td>
         <td>{{instructor_name}}</td>
         <td>{{textbook_title}}</td>
-        <td><a href="#">Edit</a></td>
-        <td><a href="#">Delete</a></td>
+        <td>
+          <a class="btn btn-primary" href="/courses/{{course_id}}">Edit</a>
+        </td>
+        <td>
+          <button type="button" class="btn btn-danger" onclick="deleteItem('courses', {{course_id}})">
+            Delete
+          </button>
+        </td>
       </tr>
     {{/each}}
   </tbody>
